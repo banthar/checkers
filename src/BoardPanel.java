@@ -17,12 +17,14 @@ public class BoardPanel extends JPanel
 
 	private Board board;
 
-	Point movePiece;
-	Point movePosition;
-	Point moveOffset;
+	private Point movePiece;
+	private Point movePosition;
+	private Point moveOffset;
 
 	List<Move> possibleMoves;
 
+	private final Player[] controllers = new Player[]{null,null};
+	
 	public BoardPanel(Board b)
 	{
 
@@ -160,7 +162,7 @@ public class BoardPanel extends JPanel
 			drawPiece(g, movePosition.x + moveOffset.x, movePosition.y + moveOffset.y, board.get(movePiece.x, movePiece.y));
 
 		}
-
+		
 	}
 
 	private void drawPiece(Graphics g, Color fg, Color bg, int piece)
@@ -209,7 +211,6 @@ public class BoardPanel extends JPanel
 	{
 		this.board = board;
 		repaint();
-
 	}
 
 }

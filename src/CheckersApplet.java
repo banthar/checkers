@@ -1,4 +1,5 @@
 import javax.swing.JApplet;
+import javax.swing.UIManager;
 
 public class CheckersApplet extends JApplet
 {
