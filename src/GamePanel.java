@@ -14,13 +14,9 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 public class GamePanel extends JPanel
 {
@@ -108,7 +104,7 @@ public class GamePanel extends JPanel
 	}
 
 	private static final List<Player> avaliablePlayers = Arrays
-			.asList(new Player[] { new HumanPlayer(), new CPUPlayer(0), new CPUPlayer(1), new CPUPlayer(2) });
+			.asList(new Player[] { new HumanPlayer(), new CPUPlayer(0), new CPUPlayer(1), new CPUPlayer(2), new CPUPlayer(3) });
 
 	private final BoardPanel boardPanel;
 
@@ -148,8 +144,8 @@ public class GamePanel extends JPanel
 
 		JPanel rightPanel = new JPanel();
 		rightPanel.setLayout(new GridLayout(0, 1));
-		rightPanel.add(new PlayerInfoPanel(1));
 		rightPanel.add(new PlayerInfoPanel(-1));
+		rightPanel.add(new PlayerInfoPanel(1));
 
 		add(rightPanel, BorderLayout.EAST);
 

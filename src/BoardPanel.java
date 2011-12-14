@@ -26,7 +26,9 @@ public class BoardPanel extends JPanel
 	private final Player[] controllers = new Player[] { new HumanPlayer(), new HumanPlayer() };
 
 	private Thread aiThread = null;
-
+	private final Object mutex = new Object();
+	
+	
 	public BoardPanel(Board b)
 	{
 
@@ -112,7 +114,6 @@ public class BoardPanel extends JPanel
 			{
 				Move move = player.getMove(board);
 				System.out.println(move);
-				aiThread = null;
 
 				try
 				{
@@ -120,8 +121,14 @@ public class BoardPanel extends JPanel
 				}
 				catch(InterruptedException e)
 				{
+					return;
 				}
-				makeMove(move);
+				
+				synchronized(mutex)
+				{
+					aiThread = null;
+					makeMove(move);
+				}
 
 			}
 		});
@@ -273,11 +280,8 @@ public class BoardPanel extends JPanel
 
 	public void setBoard(Board board)
 	{
-		if(aiThread != null)
-		{
-			aiThread.interrupt();
-			aiThread = null;
-		}
+		
+		stopAI();
 
 		this.board = board;
 		repaint();
@@ -291,8 +295,33 @@ public class BoardPanel extends JPanel
 
 	public void setController(int player, Player controller)
 	{
+		stopAI();
 		controllers[(player + 1) / 2] = controller;
 		reqestMove();
 	}
 
+	private void stopAI()
+	{
+		
+		synchronized(mutex)
+		{
+			
+			if(aiThread != null)
+			{
+				try
+				{
+					aiThread.interrupt();
+					aiThread.join();
+					aiThread = null;
+				}
+				catch(InterruptedException e)
+				{
+					throw new Error(e);
+				}
+				
+			}
+		
+		}
+	}
+	
 }

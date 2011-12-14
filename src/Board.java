@@ -10,12 +10,12 @@ public class Board
 	public static final int PAWN = 1;
 	public static final int QUEEN = 2;
 
+	public static final int width = 8;
+	public static final int height = 8;
+
 	public int turnHolder;
 
 	private final int[] data;
-
-	public static final int width = 8;
-	public static final int height = 8;
 
 	public Board()
 	{
@@ -23,7 +23,7 @@ public class Board
 		turnHolder = 1;
 
 		data = new int[width * height];
-
+		
 		for(int y = 0; y < 3; y++)
 			for(int x = 0; x < Board.width; x++)
 				if((x ^ y) % 2 != 0)
@@ -33,7 +33,25 @@ public class Board
 			for(int x = 0; x < Board.width; x++)
 				if((x ^ y) % 2 != 0)
 					set(x, y, 1);
+		
+		
+		/*
+		set(0,Board.width-1,-2);
+		
+		for(int y = Board.height - 2; y < Board.height; y++)
+			for(int x = Board.width/2; x < Board.width; x++)
+				if((x ^ y) % 2 != 0)
+					set(x, y, 1);
+		
+		turnHolder=-1;
+		*/
+		
+	}
 
+	public Board(Board board)
+	{
+		this.turnHolder = board.turnHolder;
+		this.data = board.data.clone();
 	}
 
 	private void set(int x, int y, int piece)
@@ -160,18 +178,18 @@ public class Board
 
 		if(mustJump)
 		{
-			List<Move> jumps=new LinkedList<>();
-			
+			List<Move> jumps = new LinkedList<>();
+
 			for(Move m : moves)
 			{
 				if(m.jump)
 					jumps.add(m);
 			}
-			
+
 			return jumps;
-			
+
 		}
-		
+
 		return moves;
 
 	}
@@ -204,6 +222,16 @@ public class Board
 
 		turnHolder = -turnHolder;
 
+	}
+
+	public Board clone()
+	{
+		return new Board(this);
+	}
+
+	public int getPiece(int x, int y)
+	{
+		return Math.abs(get(x,y));
 	}
 
 }

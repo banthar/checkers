@@ -7,6 +7,15 @@ public class Move
 	public final Point p1;
 	public final boolean jump;
 	
+	public int score;
+	
+	public Move()
+	{
+		p0=null;
+		p1=null;
+		jump=false;
+	}
+	
 	public Move(Point p0, Point p1, boolean jump)
 	{
 		this.p0=new Point(p0);
@@ -20,9 +29,9 @@ public class Move
 		String s1=(char)('A'+p1.x)+""+p1.y;
 		
 		if(jump)
-			return s0+"->"+s1;
+			return s0+"->"+s1+" ("+score+")";
 		else
-			return s0+"-"+s1;
+			return s0+"-"+s1+" ("+score+")";
 	}
 
 	public Point getJumpedPiece()
