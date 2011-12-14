@@ -7,6 +7,8 @@ import java.awt.GridLayout;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Arrays;
 import java.util.List;
 
@@ -66,12 +68,12 @@ public class GamePanel extends JPanel
 
 	}
 
-	private static class PlayerInfoPanel extends JPanel
+	private class PlayerInfoPanel extends JPanel
 	{
 
 		final String playerName;
 
-		public PlayerInfoPanel(int player)
+		public PlayerInfoPanel(final int player)
 		{
 
 			if(player == 1)
@@ -89,7 +91,17 @@ public class GamePanel extends JPanel
 			{
 				playerController.addItem(p);
 			}
-
+			playerController.addItemListener(new ItemListener()
+			{
+				public void itemStateChanged(ItemEvent e)
+				{
+					if(e.getStateChange()==ItemEvent.SELECTED)
+						boardPanel.setController(player,(Player)e.getItem());
+				}
+			});
+			
+			boardPanel.setController(player, (Player)playerController.getSelectedItem());
+			
 			add(playerController);
 
 		}

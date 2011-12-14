@@ -23,8 +23,10 @@ public class BoardPanel extends JPanel
 
 	List<Move> possibleMoves;
 
-	private final Player[] controllers = new Player[]{null,null};
-	
+	private final Player[] controllers = new Player[] { new HumanPlayer(), new HumanPlayer() };
+
+	private Thread aiThread = null;
+
 	public BoardPanel(Board b)
 	{
 
@@ -72,15 +74,7 @@ public class BoardPanel extends JPanel
 
 					Move move = board.getMove(movePiece, new Point(x, y));
 
-					if(move != null)
-						board.makeMove(move);
-
-					moveOffset = null;
-					movePiece = null;
-					movePosition = null;
-					possibleMoves = null;
-
-					repaint();
+					makeMove(move);
 
 				}
 			}
@@ -103,9 +97,78 @@ public class BoardPanel extends JPanel
 		});
 	}
 
+	private void reqestMove()
+	{
+
+		if(isHumanMove() || aiThread != null || board.getMoves().isEmpty())
+			return;
+
+		final Player player = getController();
+
+		aiThread = new Thread(new Runnable()
+		{
+
+			public void run()
+			{
+				Move move = player.getMove(board);
+				System.out.println(move);
+				aiThread = null;
+
+				try
+				{
+					animateMove(move);
+				}
+				catch(InterruptedException e)
+				{
+				}
+				makeMove(move);
+
+			}
+		});
+
+		aiThread.start();
+
+	}
+
 	private boolean isHumanMove()
 	{
-		return true;
+		return getController().isHuman();
+	}
+
+	private void animateMove(Move move) throws InterruptedException
+	{
+		
+		movePiece = move.p0;
+		moveOffset = new Point(0,0);
+		movePosition = new Point();
+		
+		int frames=30;
+		
+		for(int i=0;i<frames;i++)
+		{
+			movePosition.x=(move.p0.x*(frames-i)+move.p1.x*i)*32/frames;
+			movePosition.y=(move.p0.y*(frames-i)+move.p1.y*i)*32/frames;
+			repaint();
+			Thread.sleep(1000/60);
+		}
+		
+	}
+
+	private void makeMove(Move move)
+	{
+
+		if(move != null)
+			board.makeMove(move);
+
+		moveOffset = null;
+		movePiece = null;
+		movePosition = null;
+		possibleMoves = null;
+
+		repaint();
+
+		reqestMove();
+
 	}
 
 	@Override
@@ -146,23 +209,24 @@ public class BoardPanel extends JPanel
 
 			if(g instanceof Graphics2D)
 			{
-				
+
 				((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
-				
-				for(Move m : possibleMoves)
-				{
-					drawPiece(g, m.p1.x * 32, m.p1.y * 32, board.get(movePiece.x, movePiece.y));
+
+				if(possibleMoves!=null)
+					for(Move m : possibleMoves)
+					{
+						drawPiece(g, m.p1.x * 32, m.p1.y * 32, board.get(movePiece.x, movePiece.y));
 	
-				}
-				
+					}
+
 				((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
-			
+
 			}
-			
+
 			drawPiece(g, movePosition.x + moveOffset.x, movePosition.y + moveOffset.y, board.get(movePiece.x, movePiece.y));
 
 		}
-		
+
 	}
 
 	private void drawPiece(Graphics g, Color fg, Color bg, int piece)
@@ -209,8 +273,26 @@ public class BoardPanel extends JPanel
 
 	public void setBoard(Board board)
 	{
+		if(aiThread != null)
+		{
+			aiThread.interrupt();
+			aiThread = null;
+		}
+
 		this.board = board;
 		repaint();
+		reqestMove();
+	}
+
+	private Player getController()
+	{
+		return controllers[(board.turnHolder + 1) / 2];
+	}
+
+	public void setController(int player, Player controller)
+	{
+		controllers[(player + 1) / 2] = controller;
+		reqestMove();
 	}
 
 }

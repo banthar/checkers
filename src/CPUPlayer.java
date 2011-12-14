@@ -12,9 +12,12 @@ public class CPUPlayer implements Player
 		this.level=level;
 	}
 
-	Move getMove(Board board)
+	public Move getMove(Board board)
 	{
 		List<Move> moves=board.getMoves();
+		
+		if(moves.isEmpty())
+			return null;
 		
 		return moves.get(rand.nextInt(moves.size()));
 	}
@@ -31,6 +34,11 @@ public class CPUPlayer implements Player
 		
 		return names[level];
 		
+	}
+
+	public boolean isHuman()
+	{
+		return false;
 	}
 	
 }
