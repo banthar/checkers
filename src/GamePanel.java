@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -33,7 +34,6 @@ public class GamePanel extends JPanel
 			setLayout(null);
 			board.setLocation(20, 20);
 			setBackground(Color.WHITE);
-
 			setPreferredSize(new Dimension(board.getWidth() + 40, board.getHeight() + 40));
 		}
 
@@ -47,8 +47,8 @@ public class GamePanel extends JPanel
 
 			for(int x = 0; x < Board.width; x++)
 			{
-				g.drawString(Integer.toString(x), x * 32 + 32, 16);
-				g.drawString(Integer.toString(x), x * 32 + 32, board.getHeight() + 32);
+				g.drawString(Integer.toString(x+1), x * 32 + 32, 16);
+				g.drawString(Integer.toString(x+1), x * 32 + 32, board.getHeight() + 32);
 			}
 
 			for(int y = 0; y < Board.height; y++)
@@ -104,7 +104,7 @@ public class GamePanel extends JPanel
 	}
 
 	private static final List<Player> avaliablePlayers = Arrays
-			.asList(new Player[] { new HumanPlayer(), new CPUPlayer(0), new CPUPlayer(1), new CPUPlayer(2), new CPUPlayer(3) });
+			.asList(new Player[] { new HumanPlayer(), new RandomPlayer(), new MinMaxPlayer(1), new MinMaxPlayer(3), new MinMaxPlayer(5) });
 
 	private final BoardPanel boardPanel;
 

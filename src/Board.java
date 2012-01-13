@@ -35,17 +35,6 @@ public class Board
 					set(x, y, 1);
 		
 		
-		/*
-		set(0,Board.width-1,-2);
-		
-		for(int y = Board.height - 2; y < Board.height; y++)
-			for(int x = Board.width/2; x < Board.width; x++)
-				if((x ^ y) % 2 != 0)
-					set(x, y, 1);
-		
-		turnHolder=-1;
-		*/
-		
 	}
 
 	public Board(Board board)

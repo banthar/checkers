@@ -25,8 +25,8 @@ public class Move
 	
 	public String toString()
 	{
-		String s0=(char)('A'+p0.x)+""+p0.y;
-		String s1=(char)('A'+p1.x)+""+p1.y;
+		String s0=(char)('A'+p0.y)+""+(p0.x+1);
+		String s1=(char)('A'+p1.y)+""+(p1.x+1);
 		
 		if(jump)
 			return s0+"->"+s1+" ("+score+")";
