@@ -1,6 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -17,6 +18,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class GamePanel extends JPanel
 {
@@ -116,6 +119,8 @@ public class GamePanel extends JPanel
 
 	private final BoardPanel boardPanel;
 
+	private final JTextArea log;
+	
 	public GamePanel(Board board)
 	{
 
@@ -133,6 +138,7 @@ public class GamePanel extends JPanel
 			public void actionPerformed(ActionEvent e)
 			{
 				boardPanel.setBoard(new Board());
+				log.setText("");
 			}
 		});
 		buttonPanel.add(newGame);
@@ -157,6 +163,16 @@ public class GamePanel extends JPanel
 
 		add(rightPanel, BorderLayout.EAST);
 
+		log = new JTextArea(8,0);
+		log.setEditable(false);
+		log.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
+		boardPanel.setLog(log);
+		
+		JScrollPane logScroll=new JScrollPane(log);
+				
+		logScroll.setBorder(BorderFactory.createTitledBorder("Log:"));
+		add(logScroll, BorderLayout.SOUTH);
+		
 	}
 
 }

@@ -29,9 +29,9 @@ public class Move
 		String s1=(char)('A'+p1.y)+""+(p1.x+1);
 		
 		if(jump)
-			return s0+"->"+s1+" ("+score+")";
+			return s0+"->"+s1;
 		else
-			return s0+"-"+s1+" ("+score+")";
+			return s0+"-"+s1;
 	}
 
 	public Point getJumpedPiece()

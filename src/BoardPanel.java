@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 public class BoardPanel extends JPanel
 {
@@ -28,8 +29,9 @@ public class BoardPanel extends JPanel
 
 	private Thread aiThread = null;
 	private final Object mutex = new Object();
-	
-	
+
+	private JTextArea log = null;
+
 	public BoardPanel(Board b)
 	{
 
@@ -124,7 +126,7 @@ public class BoardPanel extends JPanel
 				{
 					return;
 				}
-				
+
 				synchronized(mutex)
 				{
 					aiThread = null;
@@ -145,28 +147,33 @@ public class BoardPanel extends JPanel
 
 	private void animateMove(Move move) throws InterruptedException
 	{
-		
+
 		movePiece = move.p0;
-		moveOffset = new Point(0,0);
+		moveOffset = new Point(0, 0);
 		movePosition = new Point();
-		
-		int frames=30;
-		
-		for(int i=0;i<frames;i++)
+
+		int frames = 30;
+
+		for(int i = 0; i < frames; i++)
 		{
-			movePosition.x=(move.p0.x*(frames-i)+move.p1.x*i)*32/frames;
-			movePosition.y=(move.p0.y*(frames-i)+move.p1.y*i)*32/frames;
+			movePosition.x = (move.p0.x * (frames - i) + move.p1.x * i) * 32 / frames;
+			movePosition.y = (move.p0.y * (frames - i) + move.p1.y * i) * 32 / frames;
 			repaint();
-			Thread.sleep(1000/60);
+			Thread.sleep(1000 / 60);
 		}
-		
+
 	}
 
 	private void makeMove(Move move)
 	{
 
 		if(move != null)
+		{
 			board.makeMove(move);
+
+			log.append(move.toString() + "\n");
+			log.moveCaretPosition(log.getText().length());
+		}
 
 		moveOffset = null;
 		movePiece = null;
@@ -220,11 +227,11 @@ public class BoardPanel extends JPanel
 
 				((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.2f));
 
-				if(possibleMoves!=null)
+				if(possibleMoves != null)
 					for(Move m : possibleMoves)
 					{
 						drawPiece(g, m.p1.x * 32, m.p1.y * 32, board.get(movePiece.x, movePiece.y));
-	
+
 					}
 
 				((Graphics2D)g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
@@ -281,7 +288,7 @@ public class BoardPanel extends JPanel
 
 	public void setBoard(Board board)
 	{
-		
+
 		stopAI();
 
 		this.board = board;
@@ -303,10 +310,10 @@ public class BoardPanel extends JPanel
 
 	private void stopAI()
 	{
-		
+
 		synchronized(mutex)
 		{
-			
+
 			if(aiThread != null)
 			{
 				try
@@ -319,10 +326,15 @@ public class BoardPanel extends JPanel
 				{
 					throw new Error(e);
 				}
-				
+
 			}
-		
+
 		}
 	}
-	
+
+	public void setLog(JTextArea log)
+	{
+		this.log = log;
+	}
+
 }
