@@ -59,8 +59,8 @@ public class MinMaxPlayer implements Player
 		int player = 0;
 		int opponent = 0;
 
-		for(int y = 0; y < board.height; y++)
-			for(int x = 0; x < board.width; x++)
+		for(int y = 0; y < Board.height; y++)
+			for(int x = 0; x < Board.width; x++)
 				if(board.getPlayer(x, y) == board.turnHolder)
 					player += board.getPiece(x, y);
 				else

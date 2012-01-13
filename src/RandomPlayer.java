@@ -28,5 +28,5 @@ public class RandomPlayer implements Player
 	{
 		return "Random";
 	}
-	
+
 }

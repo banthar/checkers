@@ -11,7 +11,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,9 +21,12 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel
 {
 
+	private static final long serialVersionUID = 5209868672877405279L;
+
 	private static class BorderPanel extends JPanel
 	{
 
+		private static final long serialVersionUID = 4355351078893761543L;
 		JPanel board;
 
 		public BorderPanel(JPanel board)
@@ -47,8 +49,8 @@ public class GamePanel extends JPanel
 
 			for(int x = 0; x < Board.width; x++)
 			{
-				g.drawString(Integer.toString(x+1), x * 32 + 32, 16);
-				g.drawString(Integer.toString(x+1), x * 32 + 32, board.getHeight() + 32);
+				g.drawString(Integer.toString(x + 1), x * 32 + 32, 16);
+				g.drawString(Integer.toString(x + 1), x * 32 + 32, board.getHeight() + 32);
 			}
 
 			for(int y = 0; y < Board.height; y++)
@@ -67,6 +69,7 @@ public class GamePanel extends JPanel
 	private class PlayerInfoPanel extends JPanel
 	{
 
+		private static final long serialVersionUID = -2691532936608582978L;
 		final String playerName;
 
 		public PlayerInfoPanel(final int player)
@@ -89,22 +92,27 @@ public class GamePanel extends JPanel
 			}
 			playerController.addItemListener(new ItemListener()
 			{
+
 				public void itemStateChanged(ItemEvent e)
 				{
-					if(e.getStateChange()==ItemEvent.SELECTED)
-						boardPanel.setController(player,(Player)e.getItem());
+					if(e.getStateChange() == ItemEvent.SELECTED)
+						boardPanel.setController(player, (Player)e.getItem());
 				}
 			});
-			
+
 			boardPanel.setController(player, (Player)playerController.getSelectedItem());
-			
+
 			add(playerController);
 
 		}
 	}
 
-	private static final List<Player> avaliablePlayers = Arrays
-			.asList(new Player[] { new HumanPlayer(), new RandomPlayer(), new MinMaxPlayer(1), new MinMaxPlayer(3), new MinMaxPlayer(5) });
+	private static final List<Player> avaliablePlayers = Arrays.asList(new Player[] {
+			new HumanPlayer(),
+			new RandomPlayer(),
+			new MinMaxPlayer(1),
+			new MinMaxPlayer(3),
+			new MinMaxPlayer(5) });
 
 	private final BoardPanel boardPanel;
 

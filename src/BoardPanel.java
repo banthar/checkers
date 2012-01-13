@@ -5,7 +5,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.RenderingHints.Key;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -14,6 +13,8 @@ import javax.swing.JPanel;
 
 public class BoardPanel extends JPanel
 {
+
+	private static final long serialVersionUID = -1441037602815044777L;
 
 	private Board board;
 

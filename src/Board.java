@@ -23,18 +23,17 @@ public class Board
 		turnHolder = 1;
 
 		data = new int[width * height];
-		
+
 		for(int y = 0; y < 3; y++)
-			for(int x = 0; x < Board.width; x++)
+			for(int x = 0; x < width; x++)
 				if((x ^ y) % 2 != 0)
 					set(x, y, -1);
 
-		for(int y = Board.height - 3; y < Board.height; y++)
-			for(int x = 0; x < Board.width; x++)
+		for(int y = height - 3; y < height; y++)
+			for(int x = 0; x < width; x++)
 				if((x ^ y) % 2 != 0)
 					set(x, y, 1);
-		
-		
+
 	}
 
 	public Board(Board board)
@@ -220,7 +219,7 @@ public class Board
 
 	public int getPiece(int x, int y)
 	{
-		return Math.abs(get(x,y));
+		return Math.abs(get(x, y));
 	}
 
 }

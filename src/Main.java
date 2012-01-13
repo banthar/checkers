@@ -1,8 +1,5 @@
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Arrays;
-
-import javax.swing.UIManager;
 
 public class Main
 {

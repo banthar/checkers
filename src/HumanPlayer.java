@@ -1,13 +1,12 @@
 
-
 public class HumanPlayer implements Player
 {
-	
+
 	public String toString()
 	{
 		return "Human";
 	}
-	
+
 	public boolean isHuman()
 	{
 		return true;
