@@ -1,3 +1,4 @@
+package checkers;
 import java.awt.Point;
 
 public class Move

@@ -1,3 +1,4 @@
+package checkers;
 
 public class HumanPlayer implements Player
 {

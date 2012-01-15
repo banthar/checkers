@@ -1,3 +1,4 @@
+package checkers;
 public interface Player
 {
 

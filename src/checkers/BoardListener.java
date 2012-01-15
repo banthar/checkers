@@ -1,3 +1,4 @@
+package checkers;
 
 /**
  * Observer for board events

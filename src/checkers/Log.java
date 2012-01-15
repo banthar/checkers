@@ -1,3 +1,4 @@
+package checkers;
 import java.awt.Font;
 
 import javax.swing.JTextArea;

@@ -1,3 +1,4 @@
+package checkers;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
