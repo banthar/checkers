@@ -16,19 +16,23 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.Border;
 
+/**
+ * main game component
+ */
 public class GamePanel extends JPanel
 {
 
 	private static final long serialVersionUID = 5209868672877405279L;
 
+	/**
+	 * board border with letters and numbers
+	 */
 	private static class BorderPanel extends JPanel
 	{
 
@@ -72,6 +76,9 @@ public class GamePanel extends JPanel
 
 	}
 
+	/**
+	 * Component displaying player controller and clock
+	 */
 	private class PlayerInfoPanel extends JPanel implements BoardListener
 	{
 

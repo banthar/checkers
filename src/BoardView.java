@@ -5,14 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
+/**
+ *  Component displaying state of the board
+ */
 public class BoardView extends JPanel
 {
 

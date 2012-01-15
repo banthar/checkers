@@ -1,8 +1,10 @@
 import javax.swing.JApplet;
 
+/**
+ * Main game applet
+ */
 public class CheckersApplet extends JApplet
 {
-
 	private static final long serialVersionUID = 7076766047708629733L;
 	private final GamePanel gamePanel;
 	

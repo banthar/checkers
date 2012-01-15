@@ -1,5 +1,8 @@
 import javax.swing.JFrame;
 
+/**
+ * Main game window
+ */
 public class CheckersWindow extends JFrame
 {
 

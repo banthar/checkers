@@ -7,9 +7,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * Component showing game clock
+ */
 public class Clock extends JPanel
 {
 	
+	private static final long serialVersionUID = 8988209987063047869L;
 	private final JLabel label;
 	private final Timer timer;
 	private int time=0;

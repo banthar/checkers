@@ -1,6 +1,9 @@
 import java.util.List;
 import java.util.Random;
 
+/**
+ * AI `Player` which picks random moves 
+ */
 public class RandomPlayer implements Player
 {
 
