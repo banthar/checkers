@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
@@ -14,12 +13,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 
 public class GamePanel extends JPanel
 {
@@ -69,14 +68,20 @@ public class GamePanel extends JPanel
 
 	}
 
-	private class PlayerInfoPanel extends JPanel
+	private class PlayerInfoPanel extends JPanel implements BoardListener
 	{
 
 		private static final long serialVersionUID = -2691532936608582978L;
 		final String playerName;
-
+		final Clock clock;
+		final int player;
+		
 		public PlayerInfoPanel(final int player)
 		{
+
+			this.player = player;
+			
+			setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
 
 			if(player == 1)
 				playerName = "White";
@@ -99,14 +104,38 @@ public class GamePanel extends JPanel
 				public void itemStateChanged(ItemEvent e)
 				{
 					if(e.getStateChange() == ItemEvent.SELECTED)
-						boardPanel.setController(player, (Player)e.getItem());
+						controller.setPlayer(player, (Player)e.getItem());
 				}
 			});
 
-			boardPanel.setController(player, (Player)playerController.getSelectedItem());
-
 			add(playerController);
 
+			clock = new Clock();
+			add(clock);
+			
+			controller.addBoardListener(this);
+		
+			if(controller.getBoard().turnHolder == player)
+				clock.start();
+			
+		}
+
+		@Override
+		public void onMove(Board board, Move move)
+		{
+			if(board.turnHolder != player)
+				clock.start();
+			else
+				clock.stop();
+		}
+
+		@Override
+		public void onNewGame(Board board)
+		{
+			clock.reset();
+			if(board.turnHolder == player)
+				clock.start();
+		
 		}
 	}
 
@@ -117,17 +146,20 @@ public class GamePanel extends JPanel
 			new MinMaxPlayer(3),
 			new MinMaxPlayer(5) });
 
-	private final BoardPanel boardPanel;
+	private final BoardView view;
 
-	private final JTextArea log;
+	private final BoardController controller;
 	
 	public GamePanel(Board board)
 	{
 
+		view = new BoardView(board);
+		controller = new BoardController(view);
+
 		setLayout(new BorderLayout(8, 0));
 
-		boardPanel = new BoardPanel(board);
-		add(new BorderPanel(boardPanel), BorderLayout.CENTER);
+		
+		add(new BorderPanel(view), BorderLayout.CENTER);
 
 		JComponent buttonPanel = new JPanel();
 
@@ -137,8 +169,7 @@ public class GamePanel extends JPanel
 
 			public void actionPerformed(ActionEvent e)
 			{
-				boardPanel.setBoard(new Board());
-				log.setText("");
+				controller.newGame();
 			}
 		});
 		buttonPanel.add(newGame);
@@ -163,15 +194,13 @@ public class GamePanel extends JPanel
 
 		add(rightPanel, BorderLayout.EAST);
 
-		log = new JTextArea(8,0);
-		log.setEditable(false);
-		log.setFont(new Font(Font.MONOSPACED, Font.BOLD, 12));
-		boardPanel.setLog(log);
+		Log log = new Log();
 		
 		JScrollPane logScroll=new JScrollPane(log);
-				
 		logScroll.setBorder(BorderFactory.createTitledBorder("Log:"));
 		add(logScroll, BorderLayout.SOUTH);
+		controller.addBoardListener(log);
+
 		
 	}
 
