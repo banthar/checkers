@@ -14,7 +14,8 @@ public class CheckersWindow extends JFrame
 	{
 		gamePanel = new GamePanel(new Board());
 		setContentPane(gamePanel);
-		//setResizable(false);
+		setResizable(false);
+		setTitle("Checkers");
 		pack();
 
 	}

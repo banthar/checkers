@@ -22,7 +22,7 @@ public class BoardView extends JPanel
 		Point piece = new Point();
 		Point position = new Point();
 		Point offset = new Point();
-		List<Move> possibleMoves = Collections.EMPTY_LIST;
+		List<Move> possibleMoves = Collections.emptyList();
 	}
 	
 	private static final long serialVersionUID = -1441037602815044777L;

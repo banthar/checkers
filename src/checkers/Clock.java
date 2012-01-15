@@ -60,6 +60,7 @@ public class Clock extends JPanel
 	{
 		time=0;
 		update();
+		stop();
 	}
 	
 	public void start()
