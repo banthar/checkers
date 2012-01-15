@@ -3,7 +3,10 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +22,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.border.Border;
 
 public class GamePanel extends JPanel
 {
@@ -81,7 +85,7 @@ public class GamePanel extends JPanel
 
 			this.player = player;
 			
-			setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS));
+			setLayout(new GridBagLayout());
 
 			if(player == 1)
 				playerName = "White";
@@ -108,16 +112,23 @@ public class GamePanel extends JPanel
 				}
 			});
 
-			add(playerController);
+			GridBagConstraints constraints = new GridBagConstraints();
+			constraints.fill = GridBagConstraints.VERTICAL;
+			constraints.anchor = GridBagConstraints.NORTH;
+			constraints.insets = new Insets(4, 4, 4, 4);
+			add(playerController,constraints);
 
 			clock = new Clock();
-			add(clock);
+			constraints.gridy=1;
+			constraints.weighty =1.0;
+			
+			add(clock,constraints);
 			
 			controller.addBoardListener(this);
 		
 			if(controller.getBoard().turnHolder == player)
 				clock.start();
-			
+		
 		}
 
 		@Override
@@ -156,10 +167,16 @@ public class GamePanel extends JPanel
 		view = new BoardView(board);
 		controller = new BoardController(view);
 
-		setLayout(new BorderLayout(8, 0));
-
+		BorderLayout borderLayout = new BorderLayout(8,8);
+		setLayout(borderLayout);
 		
-		add(new BorderPanel(view), BorderLayout.CENTER);
+		JPanel filler = new JPanel();
+		filler.setLayout(new GridBagLayout());
+		GridBagConstraints constraints = new GridBagConstraints();
+	    constraints.fill = GridBagConstraints.CENTER;
+		filler.add(new BorderPanel(view),constraints);
+		
+		add(filler, BorderLayout.CENTER);
 
 		JComponent buttonPanel = new JPanel();
 
@@ -200,7 +217,7 @@ public class GamePanel extends JPanel
 		logScroll.setBorder(BorderFactory.createTitledBorder("Log:"));
 		add(logScroll, BorderLayout.SOUTH);
 		controller.addBoardListener(log);
-
+		setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 		
 	}
 

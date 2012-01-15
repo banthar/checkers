@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,8 +25,8 @@ public class Clock extends JPanel
 			@Override
 			public void actionPerformed(ActionEvent e)
 			{
-				update();
 				time++;
+				update();
 			}
 		});
 		
@@ -36,11 +37,18 @@ public class Clock extends JPanel
 	private void update()
 	{
 		label.setText(String.format("%02d:%02d", time/60,time%60));
+	
+		if(timer.isRunning())
+			label.setForeground(Color.RED);
+		else
+			label.setForeground(Color.BLACK);
+		
 	}
 	
 	public void stop()
 	{
 		timer.stop();
+		update();
 	}
 	
 	public void reset()
@@ -52,6 +60,7 @@ public class Clock extends JPanel
 	public void start()
 	{
 		timer.start();
+		update();
 	}
 	
 	@Override
