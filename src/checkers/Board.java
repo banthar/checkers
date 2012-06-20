@@ -102,7 +102,7 @@ public class Board
 
 	public List<Move> getMoves(Point p0)
 	{
-		List<Move> moves = new LinkedList<>();
+		List<Move> moves = new LinkedList<Move>();
 
 		for(Move m : getMoves())
 		{
@@ -122,7 +122,7 @@ public class Board
 		Point p0 = new Point();
 		Point p1 = new Point();
 
-		List<Move> moves = new ArrayList<>();
+		List<Move> moves = new ArrayList<Move>();
 
 		for(p0.y = 0; p0.y < height; p0.y++)
 			for(p0.x = 0; p0.x < width; p0.x++)
@@ -170,7 +170,7 @@ public class Board
 
 		if(mustJump)
 		{
-			List<Move> jumps = new LinkedList<>();
+			List<Move> jumps = new LinkedList<Move>();
 
 			for(Move m : moves)
 			{

@@ -104,7 +104,7 @@ public class GamePanel extends JPanel
 
 			setBorder(BorderFactory.createTitledBorder(playerName + ":"));
 
-			JComboBox<Player> playerController = new JComboBox<>();
+			JComboBox playerController = new JComboBox();
 
 			for(Player p : avaliablePlayers)
 			{
