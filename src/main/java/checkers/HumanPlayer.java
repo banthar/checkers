@@ -1,20 +1,15 @@
 package checkers;
 
-public class HumanPlayer implements Player
-{
+public class HumanPlayer implements Player {
+    public boolean isHuman() {
+        return true;
+    }
 
-	public String toString()
-	{
-		return "Human";
-	}
+    public Move getMove(Board board) {
+        throw new IllegalStateException();
+    }
 
-	public boolean isHuman()
-	{
-		return true;
-	}
-
-	public Move getMove(Board board)
-	{
-		throw new IllegalStateException();
-	}
+    public String toString() {
+        return "Human";
+    }
 }
